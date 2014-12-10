@@ -1,0 +1,18 @@
+<table>
+	<tr>
+		{{ textarea }}<br /><br />
+	</tr>
+	<tr>
+		{% if conditions %}
+		Currently, the conditions available are:<br /><br />
+		{% for condition_group in conditions %}
+		<strong style="font-size:18px;">{{ condition_group.0 }}:</strong>
+		<ul style="padding:0; margin:1em;">
+		{% for condition in condition_group.1 %}
+		<li title="{{ condition.2 }}"><div style="font-size:18px; line-height:115%;">{{ condition.0 }} <small>({{ condition.1 }})</small></div></li>
+		{% endfor %}
+		</ul>
+		{% endfor %}
+		{% endif %}
+	</tr>
+<table>
