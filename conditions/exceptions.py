@@ -4,6 +4,9 @@
 
 """
 
+__all__ = ['UndefinedConditionError', 'InvalidConditionError',]
+
+
 class UndefinedConditionError(NotImplementedError):
     pass
 

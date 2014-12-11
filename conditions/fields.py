@@ -13,6 +13,9 @@ from .exceptions import InvalidConditionError
 from .lists import CondList
 
 
+__all__ = ['ConditionsWidget', 'ConditionsFormField', 'ConditionsField']
+
+
 class ConditionsWidget(JSONWidget):
     template_name = 'conditions_widget.html'
 
