@@ -8,7 +8,7 @@ Move conditional logic that changes often from code into models so that the logi
 - In a game, define the winning objectives of a mission/quest
 - and many more...
 
-django-conditions is under active development. You can follow my progress [on Trello](https://trello.com/b/XQnzHWYZ). django-conditions supports Django 1.4-1.7 and Python 2.7, 3.2-3.4.
+django-conditions is under active development. You can follow my progress [on Trello](https://trello.com/b/XQnzHWYZ). django-conditions supports Django 1.4.3+ and Python 2.7, 3.2+.
 
 ## Basic Usage
 
