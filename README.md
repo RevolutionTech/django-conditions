@@ -1,9 +1,68 @@
 # django-conditions
 
-![Build Status](https://travis-ci.org/RevolutionTech/django-conditions.svg?branch=master)](https://travis-ci.org/RevolutionTech/django-conditions)
+[![Build Status](https://travis-ci.org/RevolutionTech/django-conditions.svg?branch=master)](https://travis-ci.org/RevolutionTech/django-conditions)
 
 Move conditional logic that changes often from code into models so that the logic can be easily modified in admin.
 
 django-conditions is under active development. You can follow my progress [on Trello](https://trello.com/b/XQnzHWYZ).
 
-Usage and other details coming soon.
+## Usage
+
+Start by defining a condition in code:
+
+```python
+## condition_types.py
+from conditions import Condition
+
+class FullName(Condition):
+
+    # the name that appears in the db and represents your condition
+    condstr = 'FULL_NAME'
+
+    # normal conditions define eval_bool, which takes in a user
+    # and returns a boolean
+    def eval_bool(self, user, **kwargs):
+        return bool(user.first_name and user.last_name)
+```
+
+Then add a ConditionsField to your model:
+
+```python
+## models.py
+from django.db import models
+from conditions import ConditionsField, conditions_from_module
+import condition_types
+
+class Campaign(models.Model):
+    text = models.TextField()
+
+    # the ConditionsField requires the definitions of all possible conditions
+    # conditions_from_module can take an imported module and sort this out for you
+    target = ConditionsField(definitions=conditions_from_module(condition_types))
+```
+
+In the model's change form on admin, you can enter JSON to represent when you want your condition to be satisfied.
+
+```javascript
+{
+    'all': ["FULL_NAME"]
+}
+```
+
+Now you can use the logic you created in admin to determine the outcome of an event:
+
+```python
+## views.py
+from django.http import HttpResponse
+from conditions import eval_conditions
+from models import Campaign
+
+def profile(request):
+    for campaign in Campaign.objects.all():
+        if eval_conditions(campaign, 'target', request.user):
+            return HttpReponse(campaign.text)
+
+    return HttpResponse("Nothing new to see.")
+```
+
+Use django-conditions in your Django projects to change simple logic without having to deploy, and pass on the power to non-engineers too.
