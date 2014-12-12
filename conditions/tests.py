@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.test import TestCase
 
+from . import examples as condition_examples
 from .fields import ConditionsField
 from .lists import eval_conditions
 from .types import conditions_from_module
-import examples as condition_examples
 
 
 class UserProfile(models.Model):

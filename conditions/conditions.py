@@ -45,7 +45,7 @@ class Condition(object):
     def decode(cls, value, definitions=None):
         all_conditions = definitions or {}
         condition_definitions = {}
-        for condition_group in all_conditions.itervalues():
+        for condition_group in all_conditions.values():
             condition_definitions.update(condition_group)
         include_not = False
         operator = operand = key = None
@@ -99,7 +99,12 @@ class Condition(object):
         except AttributeError:
             eval_func = cls.eval_bool
 
-        return 'key' in eval_func.im_func.func_code.co_names
+        try:
+            func_code = eval_func.__code__
+        except AttributeError: # Python 2
+            func_code = eval_func.im_func.func_code
+
+        return 'key' in func_code.co_names
 
     @classmethod
     def module_name(cls):
