@@ -1,34 +1,13 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.test import TestCase
 
-from .conditions import Condition, CompareCondition
 from .fields import ConditionsField
 from .lists import eval_conditions
-
-
-class FullName(Condition):
-
-    condstr = 'FULL_NAME'
-
-    def eval_bool(self, user, **kwargs):
-        return bool(user.first_name and user.last_name)
-
-
-class Level(CompareCondition):
-
-    condstr = 'LEVEL'
-
-    def eval_operand(self, user, **kwargs):
-        return user.userprofile.level
-
-
-conditions_definitions = {
-    'User': {
-        'FULL_NAME': FullName,
-        'LEVEL': Level,
-    },
-}
+from .types import conditions_from_module
+import examples as condition_examples
 
 
 class UserProfile(models.Model):
@@ -40,7 +19,7 @@ class UserProfile(models.Model):
 class Campaign(models.Model):
 
     text = models.TextField()
-    conditions = ConditionsField(definitions=conditions_definitions)
+    conditions = ConditionsField(definitions=conditions_from_module(condition_examples))
 
 
 class CampaignTest(TestCase):
@@ -53,26 +32,54 @@ class CampaignTest(TestCase):
         )
         self.mrsy = User.objects.create_user(
             username='mrs.y',
-            email='y@gmail.com',
+            email='y@yahoo.com',
             password='also_top_secret'
         )
+        # Create UserProfile objects
         for user in [self.mrx, self.mrsy]:
             UserProfile.objects.create(user=user)
 
+        # Set Mr. X to have been a long-term member
+        self.mrx.date_joined = datetime.datetime(day=31, month=12, year=2013)
+
         self.campaign = Campaign.objects.create(
-            text='Thanks for providing your full name.',
+            text="Thanks for providing your full name.",
             conditions={
                 'all': ["FULL_NAME",],
             }
         )
         self.comparecondition_campaign = Campaign.objects.create(
-            text='Congratulations on getting to Level 5!',
+            text="Congratulations on getting to Level 5!",
             conditions={
                 'all': ["LEVEL == 5",],
             }
         )
+        self.long_term_user_campaign = Campaign.objects.create(
+            text="Thanks for being a long-term member.",
+            conditions={
+                'any': ["DATE_JOINED < 01/01/2014",],
+            }
+        )
+        self.non_gmail_users_campaign = Campaign.objects.create(
+            text="Why aren\'t you using Gmail?",
+            conditions={
+                'all': ["NOT EMAIL_DOMAIN gmail.com"]
+            }
+        )
+        self.long_term_gmail_yahoo_user_campaign = Campaign.objects.create(
+            text="You\'ve been using the same email for a long time.",
+            conditions={
+                'all': [
+                    {
+                        'any': ["EMAIL_DOMAIN gmail.com", "EMAIL_DOMAIN yahoo.com",],
+                    },
+                    "DATE_JOINED < 01/01/2014",
+                ],
+            }
+        )
 
     def tearDown(self):
+        Campaign.objects.all().delete()
         UserProfile.objects.all().delete()
         User.objects.all().delete()
 
@@ -108,3 +115,19 @@ class CampaignTest(TestCase):
         # Now neither user once again is targetted
         self.assertFalse(eval_conditions(self.comparecondition_campaign, 'conditions', self.mrx))
         self.assertFalse(eval_conditions(self.comparecondition_campaign, 'conditions', self.mrsy))
+
+    def test_custom_operators(self):
+        # Mr. X is a long-term member, but Mrs. Y isn't
+        self.assertTrue(eval_conditions(self.long_term_user_campaign, 'conditions', self.mrx))
+        self.assertFalse(eval_conditions(self.long_term_user_campaign, 'conditions', self.mrsy))
+
+    def test_key(self):
+        # Mr X. uses Gmail, but Mrs. Y doesn't
+        self.assertFalse(eval_conditions(self.non_gmail_users_campaign, 'conditions', self.mrx))
+        self.assertTrue(eval_conditions(self.non_gmail_users_campaign, 'conditions', self.mrsy))
+
+    def test_nested_condlists(self):
+        # Mr. X is a long-term member, but Mrs. Y isn't
+        # Even though they both use either Gmail or Yahoo!, only Mr. X is targeted
+        self.assertTrue(eval_conditions(self.long_term_gmail_yahoo_user_campaign, 'conditions', self.mrx))
+        self.assertFalse(eval_conditions(self.long_term_gmail_yahoo_user_campaign, 'conditions', self.mrsy))

@@ -126,12 +126,13 @@ from conditions import CompareCondition
 class Level(CompareCondition):
     condstr = 'LEVEL'
 
-    # CompareConditions define eval_operand instead of eval_bool which returns an operand instead
+    # CompareConditions define eval_operand instead of eval_bool
+    # which returns an operand instead
     def eval_operand(self, user, **kwargs):
         return user.profile.level
 ```
 
-In JSON, numbers can be compared using the normal boolean operators you see in Python- `<`, `<=`, `==`, `!=`, `>`, and `>=`:
+In JSON, numbers can be compared using the normal boolean operators you see in Python (`<`, `<=`, `==`, `!=`, `>`, and `>=`):
 
 ```javascript
 {
@@ -146,8 +147,12 @@ import datetime
 from conditions import CompareCondition
 
 class DateJoined(CompareCondition):
+    @staticmethod
+    def timestamp2datetime(timestamp):
+        return datetime.datetime.strptime(timestamp, "%m/%d/%Y")
+
     condstr = 'DATE_JOINED'
-    cast_operand = lambda timestamp: datetime.strptime(timestamp, "%m/%d/%Y")
+    cast_operand = timestamp2datetime
 
     @classmethod
     def operators(cls):
@@ -161,7 +166,7 @@ class DateJoined(CompareCondition):
         }
 
     def eval_operand(self, user, **kwargs):
-        return user.date_joined
+        return user.date_joined.strftime("%m/%d/%Y")
 ```
 
 In the admin interface, an appropriate example is randomly generated for each Condition available. When the operand is a number, a number will be generated randomly for the example automatically. However, with other types of operands this isn't possible so the example will simply show SOME_OPERAND_HERE. If you like, you can instead show an appropriate example randomly selected from a list you define:
