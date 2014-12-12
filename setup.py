@@ -33,7 +33,8 @@ class TestCommand(Command):
                 'django.contrib.auth',
                 'django.contrib.contenttypes',
                 'conditions',
-            )
+            ),
+            MIDDLEWARE_CLASSES=()
         )
         if django.VERSION[:2] >= (1, 7):
             django.setup()
