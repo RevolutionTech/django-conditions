@@ -1,6 +1,6 @@
 # django-conditions
 
-[![Build Status](https://travis-ci.org/RevolutionTech/django-conditions.svg?branch=master)](https://travis-ci.org/RevolutionTech/django-conditions) [![Documentation Status](http://django-conditions.readthedocs.org/en/latest/)](https://readthedocs.org/projects/django-conditions/?badge=latest)
+[![Build Status](https://travis-ci.org/RevolutionTech/django-conditions.svg?branch=master)](https://travis-ci.org/RevolutionTech/django-conditions) [![Documentation Status](https://readthedocs.org/projects/django-conditions/badge/?version=latest)](http://django-conditions.readthedocs.org/en/latest/)
 
 Move conditional logic that changes often from code into models so that the logic can be easily modified in admin. Some possible use cases:
 - Segment your user base into cohorts with targeted messaging
