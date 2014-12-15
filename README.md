@@ -48,7 +48,7 @@ In the model's change form on admin, you can enter JSON to represent when you wa
 
 ```javascript
 {
-    'all': ["FULL_NAME"]
+    "all": ["FULL_NAME"]
 }
 ```
 
@@ -74,19 +74,19 @@ Use django-conditions in your Django projects to change simple logic without hav
 
 Once you've created a few Conditions, you can combine them in many different ways.
 
-To require multiple conditions to be satisfied at the same time, use an 'all' list:
+To require multiple conditions to be satisfied at the same time, use an "all" list:
 
 ```javascript
 {
-    'all': ["FULL_NAME", "ACTIVE", "SUPERUSER"]
+    "all": ["FULL_NAME", "ACTIVE", "SUPERUSER"]
 }
 ```
 
-To allow just one of a set of conditions, use an 'any' list:
+To allow just one of a set of conditions, use an "any" list:
 
 ```javascript
 {
-    'any': ["FULL_NAME", "FB_CONNECTED", "EMAIL_VERIFIED"]
+    "any": ["FULL_NAME", "FB_CONNECTED", "EMAIL_VERIFIED"]
 }
 ```
 
@@ -94,11 +94,11 @@ Of course the lists may be nested:
 
 ```javascript
 {
-    'all': [
+    "all": [
         "ACTIVE",
         "SUPERUSER",
         {
-            'any': [
+            "any": [
                 "FULL_NAME",
                 "FB_CONNECTED",
                 "EMAIL_VERIFIED"
@@ -112,7 +112,7 @@ You may also add NOT to the beginning of any condition to evaluate its negation:
 
 ```javascript
 {
-    'all': ["FULL_NAME", "ACTIVE", "NOT SUPERUSER", "NOT STAFF"]
+    "all": ["FULL_NAME", "ACTIVE", "NOT SUPERUSER", "NOT STAFF"]
 }
 ```
 
@@ -136,7 +136,7 @@ In JSON, numbers can be compared using the normal boolean operators you see in P
 
 ```javascript
 {
-    'all': ["FULL_NAME", "LEVEL >= 5"]
+    "all": ["FULL_NAME", "LEVEL >= 5"]
 }
 ```
 
@@ -195,7 +195,7 @@ class EmailDomain(Condition):
 
 ```javascript
 {
-    'any': ["EMAIL_DOMAIN gmail.com", "EMAIL_DOMAIN yahoo.com"]
+    "any": ["EMAIL_DOMAIN gmail.com", "EMAIL_DOMAIN yahoo.com"]
 }
 ```
 
