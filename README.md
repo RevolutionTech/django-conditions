@@ -8,8 +8,6 @@ Move conditional logic that changes often from code into models so that the logi
 - In a game, define the winning objectives of a mission/quest
 - and many more...
 
-django-conditions is under active development. You can follow my progress [on Trello](https://trello.com/b/XQnzHWYZ). django-conditions supports Django 1.4.3+ and Python 2.7, 3.2+.
-
 ## Basic Usage
 
 Start by defining a condition in code:
@@ -72,4 +70,6 @@ Use django-conditions in your Django projects to change simple logic without hav
 
 ## More Information
 
-Full documentation available [on Read The Docs](http://django-conditions.readthedocs.org/).
+django-conditions is under active development. You can follow my progress [on Trello](https://trello.com/b/XQnzHWYZ).
+
+Full documentation is available [on Read The Docs](http://django-conditions.readthedocs.org/).
