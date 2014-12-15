@@ -1,7 +1,7 @@
 About
 ^^^^^
 
-django-conditions is a Django app that allows creation of conditional logic in Django Admin. Some possible use cases:
+django-conditions is a Django app that allows creation of conditional logic in admin. Some possible use cases:
 
 - Segment your user base into cohorts with targeted messaging
 - Provide different rewards to users depending on their expected value

@@ -13,3 +13,5 @@ Contents
    lists
    operators
    keys
+   kwargs
+   exceptions
