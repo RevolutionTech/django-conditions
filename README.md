@@ -8,6 +8,10 @@ Move conditional logic that changes often from code into models so that the logi
 - In a game, define the winning objectives of a mission/quest
 - and many more...
 
+## Installation
+
+    pip install django-conditions
+
 ## Basic Usage
 
 Start by defining a condition in code:

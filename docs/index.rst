@@ -2,6 +2,7 @@ django-conditions documentation
 ===============================
 
 .. include:: about.rst
+.. include:: install.rst
 
 Contents
 ^^^^^^^^
