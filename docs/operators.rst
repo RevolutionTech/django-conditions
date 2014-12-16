@@ -58,7 +58,7 @@ In the admin interface, an appropriate example is randomly generated for each Co
 
     class DateJoined(CompareCondition):
         condstr = 'DATE_JOINED'
-        cast_operand = lambda timestamp: datetime.strptime(timestamp, "%m/%d/%Y")
+        cast_operand = timestamp2datetime
         operand_examples = ['04/23/1995', '01/01/2015', '08/13/2014',]
 
         ...
