@@ -43,7 +43,7 @@ class TestCommand(Command):
 
 setup(
     name='django-conditions',
-    version='0.1.0',
+    version='0.9.0',
     packages=['conditions'],
     include_package_data=True,
     license='ISC License',
@@ -56,7 +56,8 @@ setup(
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: ISC License',
+        'License :: OSI Approved',
+        'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
