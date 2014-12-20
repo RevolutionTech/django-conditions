@@ -31,12 +31,8 @@ By default, a CompareCondition expects a float as the operand, but that can be o
     from conditions import CompareCondition
 
     class DateJoined(CompareCondition):
-        @staticmethod
-        def timestamp2datetime(timestamp):
-            return datetime.datetime.strptime(timestamp, "%m/%d/%Y")
-
         condstr = 'DATE_JOINED'
-        cast_operand = timestamp2datetime
+        cast_operand = lambda self, timestamp: datetime.datetime.strptime(timestamp, "%m/%d/%Y")
 
         @classmethod
         def operators(cls):
