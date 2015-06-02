@@ -4,11 +4,14 @@
 
 """
 
+import random
+
 from django import forms
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from jsonfield.fields import JSONField, JSONFormField, JSONWidget
 
+from .conditions import Condition, CompareCondition
 from .exceptions import InvalidConditionError
 from .lists import CondList
 
@@ -17,32 +20,47 @@ __all__ = ['ConditionsWidget', 'ConditionsFormField', 'ConditionsField']
 
 
 class ConditionsWidget(JSONWidget):
-    template_name = 'conditions_widget.html'
+    template_name = 'conditions/conditions_widget.html'
 
     def __init__(self, *args, **kwargs):
         self.condition_definitions = kwargs.pop('condition_definitions', {})
         if 'attrs' not in kwargs:
             kwargs['attrs'] = {}
         if 'cols' not in kwargs['attrs']:
-            kwargs['attrs']['cols'] = 100
+            kwargs['attrs']['cols'] = 50
         super(ConditionsWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, attrs=None):
         if isinstance(value, CondList):
             value = value.encode()
         textarea = super(ConditionsWidget, self).render(name, value, attrs)
-        conditions = []
+
+        condition_groups = []
         for groupname, group in self.condition_definitions.iteritems():
-            conditions_in_group = sorted(
-                [(condstr, condition.help_text(), condition.full_description()) for condstr, condition in group.iteritems()],
-                key=lambda x: x[0]
-            )
-            conditions.append((groupname, conditions_in_group))
-        conditions = sorted(conditions, key=lambda x: x[0])
+            conditions_in_group = []
+            for condstr, condition in group.items():
+                conditions_in_group.append({
+                    'condstr': condstr,
+                    'key_required': 'true' if condition.key_required() else 'false',
+                    'keys_allowed': condition.keys_allowed,
+                    'key_example': condition.key_example(),
+                    'operator_required': 'true' if issubclass(condition, CompareCondition) else 'false',
+                    'operators': condition.operators().keys() if issubclass(condition, CompareCondition) else [],
+                    'operand_example': condition.operand_example() if issubclass(condition, CompareCondition) else '',
+                    'help_text': condition.help_text(),
+                    'description': condition.full_description(),
+                })
+            conditions_in_group = sorted(conditions_in_group, key=lambda x: x['condstr'])
+
+            condition_groups.append({
+                'groupname': groupname,
+                'conditions': conditions_in_group,
+            })
+        condition_groups = sorted(condition_groups, key=lambda x: x['groupname'])
 
         context = {
             'textarea': textarea,
-            'conditions': conditions,
+            'condition_groups': condition_groups,
         }
 
         return mark_safe(render_to_string(self.template_name, context))

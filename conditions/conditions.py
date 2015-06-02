@@ -107,6 +107,20 @@ class Condition(object):
         return 'key' in func_code.co_names
 
     @classmethod
+    def key_example(cls):
+        if cls.key_required():
+            key = ' '
+            if cls.keys_allowed:
+                key += random.choice(cls.keys_allowed)
+            elif cls.key_examples:
+                key += random.choice(cls.key_examples)
+            else:
+                key += 'SOME_KEY_HERE'
+        else:
+            key = ''
+        return key
+
+    @classmethod
     def module_name(cls):
         module = inspect.getmodule(cls)
         try:
@@ -119,21 +133,10 @@ class Condition(object):
         """
         Randomly generate a possible example for this condition
         """
-        if cls.key_required():
-            key = ' '
-            if cls.keys_allowed:
-                key += random.choice(cls.keys_allowed)
-            elif cls.key_examples:
-                key += random.choice(cls.key_examples)
-            else:
-                key += 'SOME_KEY_HERE'
-        else:
-            key = ''
-
         return "Ex. {not_}{condstr}{key}".format(
             not_=random.choice(['NOT ', '']),
             condstr=cls.condstr,
-            key=key
+            key=cls.key_example()
         )
 
     @classmethod
@@ -143,7 +146,10 @@ class Condition(object):
         (otherwise return help_text)
         """
         docstring = inspect.getdoc(cls)
-        return docstring if docstring else cls.help_text()
+        if docstring:
+            return docstring.replace('\r', '').replace('\n', ' ')
+        else:
+            return cls.help_text()
 
     def __init__(self, operator=None, operand=None, key=None, include_not=False, *args, **kwargs):
         super(Condition, self).__init__(*args, **kwargs)
@@ -194,25 +200,29 @@ class CompareCondition(Condition):
             return {}
 
     @classmethod
+    def operand_example(cls):
+        if cls.cast_operand in [float, int]:
+            if cls.cast_operand == float:
+                operand = round(random.uniform(0, 100), 2)
+            elif cls.cast_operand == int:
+                operand = random.randint(0, 100)
+        elif cls.operand_examples:
+            operand = random.choice(cls.operand_examples)
+        else:
+            operand = 'SOME_OPERAND_HERE'
+        return operand
+
+    @classmethod
     def help_text(cls):
         """
         Randomly generate a possible example for this condition
         """
         normal_condition_help_text = super(CompareCondition, cls).help_text()
-        if cls.cast_operand in [float, int]:
-            if cls.cast_operand == float:
-                random_operand = round(random.uniform(0, 100), 2)
-            elif cls.cast_operand == int:
-                random_operand = random.randint(0, 100)
-        elif cls.operand_examples:
-            random_operand = random.choice(cls.operand_examples)
-        else:
-            random_operand = 'SOME_OPERAND_HERE'
 
         help_text = "{normal} {operator} {operand}".format(
             normal=normal_condition_help_text,
             operator=random.choice(cls.operators().keys()),
-            operand=random_operand
+            operand=cls.operand_example()
         )
         return help_text
 

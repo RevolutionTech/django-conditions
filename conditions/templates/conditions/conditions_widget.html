@@ -1,0 +1,57 @@
+{% load static %}
+<script type="text/javascript">
+    var staticloc_icon_plus;
+    var staticloc_icon_minus;
+    var staticloc_icon_information;
+    var condition_groups;
+
+    $(document).ready(function (){
+        'use strict'
+
+        // Get locations of static content
+        staticloc_icon_plus = "{% static "conditions/img/icon-plus.png" %}";
+        staticloc_icon_minus = "{% static "conditions/img/icon-minus.png" %}";
+        staticloc_icon_information = "{% static "conditions/img/icon-information.png" %}";
+
+        // Get condition groups
+        condition_groups = [
+            {% for condition_group in condition_groups %}
+                {
+                    groupid: {{ forloop.counter }},
+                    groupname: "{{ condition_group.groupname }}",
+                    conditions: [
+                        {% for condition in condition_group.conditions %}
+                            {
+                                groupid: {{ forloop.parentloop.counter }},
+                                conditionid: {{ forloop.counter }},
+                                condstr: "{{ condition.condstr }}",
+                                key_required: {{ condition.key_required }},
+                                keys_allowed: [
+                                    {% for key_allowed in condition.keys_allowed %}
+                                        "{{ key_allowed }}"{% if not forloop.last %},{% endif %}
+                                    {% endfor %}
+                                ],
+                                key_example: "{{ condition.key_example }}",
+                                operator_required: {{ condition.operator_required }},
+                                operators: [
+                                    {% for operator in condition.operators %}
+                                        "{{ operator }}"{% if not forloop.last %},{% endif %}
+                                    {% endfor %}
+                                ],
+                                operand_example: "{{ condition.operand_example }}",
+                                help_text: "{{ condition.help_text }}",
+                                description: "{{ condition.description }}"
+                            }{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    ]
+                }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ];
+    });
+</script>
+
+<br /><br />
+<div class="condition-json pull-right">{{ textarea }}</div>
+<div class="condition-selector-set"></div>
+
+<script type="text/javascript" src="{% static "conditions/js/conditions_widget.js" %}"></script>

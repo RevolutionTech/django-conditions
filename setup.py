@@ -67,6 +67,15 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
+    package_data={
+        'conditions': [
+            'static/conditions/js/conditions_widget.js',
+            'static/conditions/img/icon-information.png',
+            'static/conditions/img/icon-information.png',
+            'static/conditions/img/icon-information.png',
+            'templates/conditions/conditions_widget.html',
+        ],
+    },
     install_requires=['Django>=1.4.3', 'django-jsonfield>=0.9.13'],
     tests_require=['Django>=1.4.3', 'django-jsonfield>=0.9.13'],
     cmdclass={'test': TestCommand},
