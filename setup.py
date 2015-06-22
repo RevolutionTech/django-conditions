@@ -43,7 +43,7 @@ class TestCommand(Command):
 
 setup(
     name='django-conditions',
-    version='0.9.0',
+    version='0.9.1',
     packages=['conditions'],
     include_package_data=True,
     license='ISC License',
