@@ -74,14 +74,15 @@ $(function(){
             "change": "changeSelected"
         },
         changeSelected: function(){
-            this.current_selection = $(this.el).children().first().val();
+            this.current_selection = $(this.el).children('select').val();
             this.setSelectedId(this.current_selection);
 
             // Update JSON
             this.condition_selector_view.updateJSON();
         },
         setSelectedId: function(id){
-            // do nothing by default
+            $(this.el).children('select').val(id);
+            this.current_selection = $(this.el).children('select').val();
         }
     });
     var InputView = Backbone.View.extend({
@@ -101,7 +102,8 @@ $(function(){
         events: {
             "change": "changeInput"
         },
-        changeInput: function(){
+        changeInput: function(val){
+            if (val) $(this.el).children().val(val);
             this.current_selection = $(this.el).children().val();
 
             // Update JSON
@@ -141,11 +143,23 @@ $(function(){
 
             // Update JSON
             this.condition_selector_view.updateJSON();
+        },
+        updateValue: function(val){
+            if (this.options.options.length > 0){
+                $(this.el).children().first().val(val);
+            }
+            else {
+                $(this.el).children().val(val);
+            }
+            this.changeSelected();
         }
     })
 
     var ConditionGroupListView = SelectListView.extend({
         setSelectedId: function(groupid){
+            $(this.el).children('select').val(groupid);
+            this.current_selection = groupid;
+
             // Handle sub-condlist
             if (groupid == "all" || groupid == "any"){
                 var condition_selector_group_view = new ConditionSelectorGroupView({
@@ -167,6 +181,9 @@ $(function(){
     });
     var CondstrListView = SelectListView.extend({
         setSelectedId: function(conditionid){
+            $(this.el).children('select').val(conditionid);
+            this.current_selection = conditionid;
+
             // Get condition from id
             var index = -1;
             $.each(this.options.options, function(i, val){
@@ -207,11 +224,67 @@ $(function(){
             // Render empty condition selector
             this.render();
 
-            // Get default condition
+            // Determine from JSON if we should create a new sublist
+            var json = this.options.json;
+            if ($.isPlainObject(json)){
+                var condition_selector_group_view = new ConditionSelectorGroupView({
+                    el: $(this.el),
+                    json: json
+                });
+                this.condition_selector_child_group = condition_selector_group_view;
+                condition_selector_group_view.condition_selector_parent_group = this.condition_selector_group;
+                return;
+            }
+
+            // Otherwise get condition from JSON
             var condition_groups = this.options.condition_groups;
-            var selected_condition_list = condition_groups[0].get('conditions');
-            var selected_condition = selected_condition_list[0];
+            var condition_list = [];
+            if (json) condition_list = this.options.json.split(" ");
+            var condition_not = false;
+            if (condition_list.length > 0 && condition_list[0] == "NOT"){
+                condition_not = true;
+                condition_list.shift();
+            }
+
+            var condstr = null;
+            var key = null;
+            var operator = null;
+            var operand = null;
+            var selected_group_index = 0;
+            var selected_condition_list = null;
+            var selected_condition = null;
+
+            // Get selected condition from condstr
+            if (condition_list.length > 0){
+                condstr = condition_list.shift();
+                $.each(condition_groups, function(i, val){
+                    var conditions = val.get('conditions')
+                    $.each(conditions, function(i, val){
+                        if (val.get('name') == condstr){
+                            selected_condition = val;
+                            return false;
+                        }
+                    });
+                    if (selected_condition){
+                        selected_group_index = i;
+                        selected_condition_list = conditions;
+                        return false;
+                    }
+                });
+            }
+            // Use defaults
+            else {
+                selected_condition_list = condition_groups[0].get('conditions');
+                selected_condition = selected_condition_list[0];
+            }
             this.selected_condition = selected_condition;
+
+            // Determine key, operator, and operand
+            if (selected_condition.get('key_required')) key = condition_list.shift();
+            if (selected_condition.get('operator_required')){
+                operator = condition_list.shift();
+                operand = condition_list.shift();
+            }
 
             // Create components of condition selector
             // NOT
@@ -266,6 +339,14 @@ $(function(){
             });
             this.condstr_list_view.condition_operand_input_view = this.condition_operand_input_view;
             this.condition_operand_input_view.condition_selector_view = this;
+
+            // Update selections in condition selector
+            this.condition_not_list_view.setSelectedId(condition_not ? "NOT" : "");
+            this.condition_group_list_view.setSelectedId(selected_group_index+1);
+            if (condstr) this.condstr_list_view.setSelectedId(condstr);
+            if (key) this.condition_key_input_view.updateValue(key);
+            if (operator) this.condition_operator_list_view.setSelectedId(operator);
+            if (operand) this.condition_operand_input_view.changeInput(operand);
         },
         render: function(){
             var template = _.template($('#condition-selector-template').html(), {});
@@ -276,7 +357,7 @@ $(function(){
             'click img#condition-information': 'information'
         },
         updateJSON: function(){
-            this.condition_selector_group.updateJSON();
+            if (this.condition_selector_group) this.condition_selector_group.updateJSON();
         },
         encodeJSON: function(){
             // If sublist, encode that JSON
@@ -334,18 +415,16 @@ $(function(){
 
     var ConditionSelectorGroupView = Backbone.View.extend({
         defaults: {
+            json: {},
             listtype: "all"
         },
         initialize: function(){
             this.render();
+            this.condition_selectors = [];
 
-            // Create initial condition selector
-            var condition_selector_view = new ConditionSelectorView({
-                el: $(this.el).find('#condition-selector-group > #condition-selector'),
-                condition_groups: condition_group_list
-            });
-            this.condition_selectors = [condition_selector_view];
-            condition_selector_view.condition_selector_group = this;
+            // Decode JSON or create initial condition selector
+            if (!$.isEmptyObject(this.options.json)) this.decodeJSON(this.options.json);
+            else this.add_condition();
         },
         render: function(){
             var template = _.template($('#condition-selector-group-template').html(), {listtype: this.options.listtype});
@@ -353,13 +432,24 @@ $(function(){
         },
         events: {
             'change': 'changeSelected',
-            'click img#condition-add': 'add_condition'
+            'click img#condition-add': 'click_add_condition'
         },
         changeSelected: function(){
             this.options.listtype = $(this.el).find('#condition-selector > select').val();
 
             // Update JSON
             this.updateJSON();
+        },
+        decodeJSON: function(json){
+            // Set the condlist type
+            this.options.listtype = Object.keys(json)[0];
+            $(this.el).children().children('select').val(this.options.listtype);
+
+            // Create condition selectors
+            var self = this;
+            $.each(json[this.options.listtype], function(i, val){
+                self.add_condition(val);
+            })
         },
         encodeJSON: function(){
             var d = {}
@@ -395,23 +485,32 @@ $(function(){
                 }
             }
         },
-        add_condition: function(e){
-            e.stopImmediatePropagation(); // do not propagate to parents
-
+        add_condition: function(json){
             $(this.el).children().children('#condition-selector-group').append("<div style=\"margin-left: 10px;\" id=\"condition-selector\"></div>");
             var condition_selector_view = new ConditionSelectorView({
                 el: $(this.el).find('#condition-selector-group > #condition-selector').last(),
+                json: json,
                 condition_groups: condition_group_list
             });
             this.condition_selectors.push(condition_selector_view);
             condition_selector_view.condition_selector_group = this;
 
             this.updateJSON();
+        },
+        click_add_condition: function(e){
+            e.stopImmediatePropagation(); // do not propagate to parents
+            this.add_condition();
         }
     });
-    var condition_selector_group_view = new ConditionSelectorGroupView({
-        el: $('#condition-selector-widget'),
-        listtype: "all"
+    function reset_condition_selector_widget(){
+        new ConditionSelectorGroupView({
+            el: $('#condition-selector-widget'),
+            json: JSON.parse($('#condition-json > textarea').val()),
+        });
+    }
+    $('#condition-json > textarea').change(function(){
+        reset_condition_selector_widget();
     });
+    reset_condition_selector_widget();
 
 });
