@@ -1,4 +1,12 @@
 {% load static %}
+
+<!-- jQuery and Backbone -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js" type="text/javascript"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js" type="text/javascript"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.0/backbone.localStorage-min.js" type="text/javascript"></script>
+
+<!-- Get JS variables from Django -->
 <script type="text/javascript">
     var staticloc_icon_plus;
     var staticloc_icon_minus;
@@ -50,8 +58,44 @@
     });
 </script>
 
+<!-- Widget -->
 <br /><br />
-<div class="condition-json pull-right">{{ textarea }}</div>
-<div class="condition-selector-set"></div>
+<div id="condition-json" style="float: right;">{{ textarea }}</div>
+<div id="condition-selector-widget"></div>
 
+<!-- Templates -->
+<script type="text/template" id="select-list-template">
+    <select>
+        <% _.each(options, function(option) { %>
+            <option value="<%= option.get('id') %>"><%= option.get('name') %></option>
+        <% }); %>
+    </select>
+</script>
+<script type="text/template" id="input-template">
+    <input type="text" placeholder="<%= placeholder %>" />
+</script>
+<script type="text/template" id="condition-selector-template">
+    <img id="condition-remove" src="{% static "conditions/img/icon-minus.png" %}" />
+    <span id="condition-not"></span>
+    <span id="condition-groups"></span>
+    <span id="condstrs"></span>
+    <span id="condition-key"></span>
+    <span id="condition-operators"></span>
+    <span id="condition-operand"></span>
+    <img id="condition-information" src="{% static "conditions/img/icon-information.png" %}" />
+</script>
+<script type="text/template" id="condition-selector-group-template">
+    <div id="condition-selector">
+        <select>
+            <option value="all"<% if (listtype == "all") { %> selected<% } %>>all</option>
+            <option value="any"<% if (listtype == "any") { %> selected<% } %>>any</option>
+        </select>
+        <div id="condition-selector-group">
+            <div style="margin-left: 10px;" id="condition-selector"></div>
+        </div>
+        <img id="condition-add" style="margin-left: 10px;" src="{% static "conditions/img/icon-plus.png" %}" />
+    </div>
+</script>
+
+<!-- Conditions Widget JS -->
 <script type="text/javascript" src="{% static "conditions/js/conditions_widget.js" %}"></script>
