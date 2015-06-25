@@ -102,7 +102,10 @@ $(function(){
         events: {
             "change": "changeInput"
         },
-        changeInput: function(val){
+        changeInput: function(e){
+            this.updateInput();
+        },
+        updateInput: function(val){
             if (val) $(this.el).children().val(val);
             this.current_selection = $(this.el).children().val();
 
@@ -209,7 +212,7 @@ $(function(){
             this.condition_operand_input_view.options.show = condition.get('operator_required');
             this.condition_operand_input_view.options.placeholder = condition.get('operand_example');
             this.condition_operand_input_view.render();
-            this.condition_operand_input_view.changeInput();
+            this.condition_operand_input_view.updateInput();
 
             // Update condition selector
             this.condition_selector_view.selected_condition = condition;
@@ -346,7 +349,7 @@ $(function(){
             if (condstr) this.condstr_list_view.setSelectedId(condstr);
             if (key) this.condition_key_input_view.updateValue(key);
             if (operator) this.condition_operator_list_view.setSelectedId(operator);
-            if (operand) this.condition_operand_input_view.changeInput(operand);
+            if (operand) this.condition_operand_input_view.updateInput(operand);
         },
         render: function(){
             var template = _.template($('#condition-selector-template').html(), {});
