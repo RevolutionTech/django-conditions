@@ -503,10 +503,20 @@ $(function(){
         }
     });
     function reset_condition_selector_widget(){
-        new ConditionSelectorGroupView({
+        var json;
+        var json_text = $('#condition-json > textarea').val();
+        if (json_text == ""){
+            json = {all: []};
+        }
+        else {
+            json = JSON.parse(json_text);
+        }
+
+        var condition_selector_group_view = new ConditionSelectorGroupView({
             el: $('#condition-selector-widget'),
-            json: JSON.parse($('#condition-json > textarea').val()),
+            json: json,
         });
+        condition_selector_group_view.updateJSON();
     }
     $('#condition-json > textarea').change(function(){
         reset_condition_selector_widget();
