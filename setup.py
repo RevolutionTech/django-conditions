@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 from setuptools import setup, Command
 
@@ -41,6 +42,9 @@ class TestCommand(Command):
         call_command('test', 'conditions')
 
 
+requirements = ['Django>=1.4.3', 'django-jsonfield>=0.9.13']
+
+
 setup(
     name='django-conditions',
     version='0.9.4',
@@ -76,7 +80,7 @@ setup(
             'templates/conditions/conditions_widget.html',
         ],
     },
-    install_requires=['Django>=1.4.3', 'django-jsonfield>=0.9.13'],
-    tests_require=['Django>=1.4.3', 'django-jsonfield>=0.9.13'],
+    install_requires=requirements,
+    tests_require=requirements,
     cmdclass={'test': TestCommand},
 )

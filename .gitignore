@@ -2,11 +2,6 @@
 ###################
 *.pyc
 
-# Coverage #
-############
-.coverage
-htmlcov
-
 # OS generated files #
 ######################
 .DS_Store
