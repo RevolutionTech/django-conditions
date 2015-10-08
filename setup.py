@@ -47,7 +47,7 @@ requirements = ['Django>=1.4.3', 'django-jsonfield>=0.9.13']
 
 setup(
     name='django-conditions',
-    version='0.9.4',
+    version='0.9.5',
     packages=['conditions'],
     include_package_data=True,
     license='ISC License',
