@@ -1,6 +1,7 @@
 # django-conditions
 
 [![Build Status](https://travis-ci.org/RevolutionTech/django-conditions.svg?branch=master)](https://travis-ci.org/RevolutionTech/django-conditions) [![Coverage Status](https://coveralls.io/repos/RevolutionTech/django-conditions/badge.svg?branch=master&service=github)](https://coveralls.io/github/RevolutionTech/django-conditions?branch=master) [![Dependency Status](https://www.versioneye.com/user/projects/5609e6b75a262f001a000345/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5609e6b75a262f001a000345) [![Documentation Status](https://readthedocs.org/projects/django-conditions/badge/?version=latest)](http://django-conditions.readthedocs.org/en/latest/)
+
 [![PyPI](https://img.shields.io/pypi/dm/django-conditions.svg)](https://pypi.python.org/pypi/django-conditions/) [![PyPI](https://img.shields.io/pypi/v/django-conditions.svg)](https://pypi.python.org/pypi/django-conditions/)
 
 Move conditional logic that changes often from code into models so that the logic can be easily modified in admin. Some possible use cases:
