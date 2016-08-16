@@ -15,7 +15,7 @@ env:
 
 install:
   - pip install -q Django==$DJANGO_VERSION
-  - pip install django-jsonfield coverage python-coveralls
+  - pip install django-jsonfield coverage
 
 script: coverage run --source=. ./setup.py test
 
