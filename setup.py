@@ -42,7 +42,7 @@ class TestCommand(Command):
         call_command('test', 'conditions')
 
 
-requirements = ['Django>=1.4.3', 'django-jsonfield>=0.9.13']
+requirements = ['Django>=1.5.12', 'django-jsonfield>=0.9.13']
 
 
 setup(
