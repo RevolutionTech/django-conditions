@@ -1,7 +1,7 @@
 # django-conditions
 
 [![Build Status](https://travis-ci.org/RevolutionTech/django-conditions.svg?branch=master)](https://travis-ci.org/RevolutionTech/django-conditions)
-[![Coverage Status](https://coveralls.io/repos/RevolutionTech/django-conditions/badge.svg?branch=master&service=github)](https://coveralls.io/github/RevolutionTech/django-conditions?branch=master)
+[![codecov](https://codecov.io/gh/RevolutionTech/django-conditions/branch/master/graph/badge.svg)](https://codecov.io/gh/RevolutionTech/django-conditions)
 [![Dependency Status](https://www.versioneye.com/user/projects/56de7e4cdf573d0048dafc52/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56de7e4cdf573d0048dafc52)
 [![Documentation Status](https://readthedocs.org/projects/django-conditions/badge/?version=latest)](http://django-conditions.readthedocs.org/en/latest/)
 

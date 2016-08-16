@@ -20,7 +20,7 @@ install:
 script: coverage run --source=. ./setup.py test
 
 after_success:
-  - coveralls
+  - bash <(curl -s https://codecov.io/bash)
 
 matrix:
   exclude:
