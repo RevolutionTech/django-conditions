@@ -524,6 +524,13 @@ $(function(){
     $('#condition-json > textarea').change(function(){
         reset_condition_selector_widget();
     });
-    reset_condition_selector_widget();
+
+    // HACK: Prevent this JS from running multiple times
+    // by using a global variable. The better way to avoid
+    // this issue is to use a namespace on a per-widget basis.
+    if (!window.djConditionsInitialized) {
+        reset_condition_selector_widget();
+        window.djConditionsInitialized = true;
+    }
 
 });

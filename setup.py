@@ -50,7 +50,7 @@ requirements = [
 
 setup(
     name='django-conditions',
-    version='0.9.6',
+    version='0.9.7',
     packages=['conditions'],
     include_package_data=True,
     license='ISC License',
