@@ -12,7 +12,7 @@ import random
 from .exceptions import UndefinedConditionError, InvalidConditionError
 
 
-__all__ = ['Condition', 'CompareCondition',]
+__all__ = ['Condition', 'CompareCondition']
 
 
 logger = logging.getLogger('condition')

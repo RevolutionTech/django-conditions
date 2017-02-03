@@ -45,19 +45,19 @@ class CampaignTest(TestCase):
         self.campaign = Campaign.objects.create(
             text="Thanks for providing your full name.",
             conditions={
-                'all': ["FULL_NAME",],
+                'all': ["FULL_NAME"],
             }
         )
         self.comparecondition_campaign = Campaign.objects.create(
             text="Congratulations on getting to Level 5!",
             conditions={
-                'all': ["LEVEL == 5",],
+                'all': ["LEVEL == 5"],
             }
         )
         self.long_term_user_campaign = Campaign.objects.create(
             text="Thanks for being a long-term member.",
             conditions={
-                'any': ["DATE_JOINED < 01/01/2014",],
+                'any': ["DATE_JOINED < 01/01/2014"],
             }
         )
         self.non_gmail_users_campaign = Campaign.objects.create(
@@ -71,7 +71,7 @@ class CampaignTest(TestCase):
             conditions={
                 'all': [
                     {
-                        'any': ["EMAIL_DOMAIN gmail.com", "EMAIL_DOMAIN yahoo.com",],
+                        'any': ["EMAIL_DOMAIN gmail.com", "EMAIL_DOMAIN yahoo.com"],
                     },
                     "DATE_JOINED < 01/01/2014",
                 ],

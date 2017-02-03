@@ -9,7 +9,7 @@ import inspect
 from .conditions import Condition
 
 
-__all__ = ['conditions_from_module',]
+__all__ = ['conditions_from_module']
 
 
 def _iscondition(cond):
