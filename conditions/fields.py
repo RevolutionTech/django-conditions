@@ -4,14 +4,12 @@
 
 """
 
-import random
-
 from django import forms
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from jsonfield.fields import JSONField, JSONFormField, JSONWidget
 
-from .conditions import Condition, CompareCondition
+from .conditions import CompareCondition
 from .exceptions import InvalidConditionError
 from .lists import CondList
 
