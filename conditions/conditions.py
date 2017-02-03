@@ -161,7 +161,10 @@ class Condition(object):
         try:
             evaluation = self.eval_bool(user, **kwargs)
         except Exception as e:
-            logger.warning("An exception occurred while processing a condition: {exception}".format(exception=str(e)), exc_info=True)
+            logger.warning(
+                "An exception occurred while processing a condition: {exception}".format(exception=str(e)),
+                exc_info=True
+            )
             return False
 
         if self.include_not:
