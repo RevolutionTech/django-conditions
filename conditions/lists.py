@@ -103,7 +103,7 @@ def eval_conditions(model, field_name, user, **kwargs):
         return False
 
     if isinstance(conditions, dict):
-        condition_definitions = model._meta.get_field_by_name(field_name)[0].condition_definitions
+        condition_definitions = model._meta.get_field(field_name).condition_definitions
         conditions = CondList.decode(conditions, definitions=condition_definitions)
 
     return conditions.eval(user, **kwargs)
