@@ -78,11 +78,6 @@ class CampaignTest(TestCase):
             }
         )
 
-    def tearDown(self):
-        Campaign.objects.all().delete()
-        UserProfile.objects.all().delete()
-        User.objects.all().delete()
-
     def test_basic_campaign_targetting(self):
         # Neither user should be targetted before having a name
         self.assertFalse(eval_conditions(self.campaign, 'conditions', self.mrx))
