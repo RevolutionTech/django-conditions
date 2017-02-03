@@ -24,7 +24,7 @@ class Condition(object):
     """
 
     __metaclass__ = abc.ABCMeta
-    keys_allowed = [] # By default, allow any key
+    keys_allowed = []  # By default, allow any key
     key_examples = []
     operand_examples = []
 
@@ -101,7 +101,7 @@ class Condition(object):
 
         try:
             func_code = eval_func.__code__
-        except AttributeError: # Python 2
+        except AttributeError:  # Python 2
             func_code = eval_func.im_func.func_code
 
         return 'key' in func_code.co_names

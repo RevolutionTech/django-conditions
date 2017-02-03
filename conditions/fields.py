@@ -20,6 +20,7 @@ __all__ = ['ConditionsWidget', 'ConditionsFormField', 'ConditionsField']
 
 
 class ConditionsWidget(JSONWidget):
+
     template_name = 'conditions/conditions_widget.html'
 
     def __init__(self, *args, **kwargs):
@@ -77,14 +78,13 @@ class ConditionsFormField(JSONFormField):
     def clean(self, value):
         """ Validate conditions by decoding result """
         cleaned_json = super(ConditionsFormField, self).clean(value)
-        if cleaned_json is None: return
+        if cleaned_json is None:
+            return
 
         try:
             CondList.decode(cleaned_json, definitions=self.condition_definitions)
         except InvalidConditionError as e:
-            raise forms.ValidationError(
-                "Invalid conditions JSON: {error}".format(error=str(e))
-            )
+            raise forms.ValidationError("Invalid conditions JSON: {error}".format(error=str(e)))
         else:
             return cleaned_json
 

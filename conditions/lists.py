@@ -99,7 +99,8 @@ class CondAnyList(CondList):
 def eval_conditions(model, field_name, user, **kwargs):
     conditions = getattr(model, field_name)
 
-    if conditions is None: return False
+    if conditions is None:
+        return False
 
     if isinstance(conditions, dict):
         condition_definitions = model._meta.get_field_by_name(field_name)[0].condition_definitions

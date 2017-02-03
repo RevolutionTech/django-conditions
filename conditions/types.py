@@ -13,8 +13,11 @@ __all__ = ['conditions_from_module',]
 
 
 def _iscondition(cond):
-    return inspect.isclass(cond) and issubclass(cond, Condition) and \
-        cond.__name__ not in ['Condition', 'CompareCondition']
+    return (
+        inspect.isclass(cond)
+        and issubclass(cond, Condition)
+        and cond.__name__ not in ['Condition', 'CompareCondition']
+    )
 
 
 def conditions_from_module(module):
