@@ -37,13 +37,12 @@ class TestCommand(Command):
             ),
             MIDDLEWARE_CLASSES=()
         )
-        if django.VERSION[:2] >= (1, 7):
-            django.setup()
+        django.setup()
         call_command('test', 'conditions')
 
 
 requirements = [
-    'Django >= 1.5.12, < 1.10a0',
+    'Django >= 1.8, < 1.10a0',
     'django-jsonfield >= 0.9.13, < 1.0.0a0',
 ]
 
@@ -62,9 +61,6 @@ setup(
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 1.5',
-        'Framework :: Django :: 1.6',
-        'Framework :: Django :: 1.7',
         'Framework :: Django :: 1.8',
         'Framework :: Django :: 1.9',
         'Intended Audience :: Developers',

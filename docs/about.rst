@@ -8,4 +8,4 @@ django-conditions is a Django app that allows creation of conditional logic in a
 - In a game, define the winning objectives of a mission/quest
 - and many more...
 
-django-conditions supports Django 1.5.12+ and Python 2.7, 3.3+.
+django-conditions supports Django 1.8+ and Python 2.7, 3.3+.

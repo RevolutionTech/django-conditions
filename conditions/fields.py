@@ -116,13 +116,3 @@ class ConditionsField(JSONField):
         if isinstance(value, CondList):
             value = value.encode()
         return super(ConditionsField, self).get_db_prep_value(value, connection, prepared)
-
-
-# Introspection rules required by south
-# Read more here: http://south.aeracode.org/wiki/MyFieldsDontWork
-try:
-    from south.modelsinspector import add_introspection_rules
-except ImportError:
-    pass
-else:
-    add_introspection_rules([], ["^conditions\.fields\.ConditionsField"])
