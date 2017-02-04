@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import os
-from setuptools import setup, Command
+from setuptools import setup, find_packages, Command
 
 
 with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
@@ -38,7 +38,7 @@ class TestCommand(Command):
             MIDDLEWARE_CLASSES=()
         )
         django.setup()
-        call_command('test', 'conditions')
+        call_command('test')
 
 
 requirements = [
@@ -50,7 +50,7 @@ requirements = [
 setup(
     name='django-conditions',
     version='0.9.8',
-    packages=['conditions'],
+    packages=find_packages(),
     include_package_data=True,
     license='ISC License',
     description='A Django app that allows creation of conditional logic in admin.',

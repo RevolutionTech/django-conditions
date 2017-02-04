@@ -1,25 +1,10 @@
 import datetime
 
 from django.contrib.auth.models import User
-from django.db import models
 from django.test import TestCase
 
-from . import examples as condition_examples
-from .fields import ConditionsField
-from .lists import eval_conditions
-from .types import conditions_from_module
-
-
-class UserProfile(models.Model):
-
-    user = models.OneToOneField(User)
-    level = models.IntegerField(default=1)
-
-
-class Campaign(models.Model):
-
-    text = models.TextField()
-    conditions = ConditionsField(definitions=conditions_from_module(condition_examples))
+from ..lists import eval_conditions
+from .models import UserProfile, Campaign
 
 
 class CampaignTest(TestCase):
