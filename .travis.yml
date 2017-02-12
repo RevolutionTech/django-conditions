@@ -12,7 +12,7 @@ env:
 
 install:
   - pip install -q Django==$DJANGO_VERSION
-  - pip install 'django-jsonfield >= 0.9.13, < 1.0.0a0' coverage
+  - pip install 'django-jsonfield < 2.0.0a0' coverage
 
 script: coverage run --source=. ./setup.py test
 
