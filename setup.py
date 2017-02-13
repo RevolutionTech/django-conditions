@@ -43,13 +43,13 @@ class TestCommand(Command):
 
 requirements = [
     'Django >= 1.8, < 1.10a0',
-    'django-jsonfield < 2.0.0a0',
+    'django-jsonfield >= 1.0.1, < 2.0.0a0',
 ]
 
 
 setup(
     name='django-conditions',
-    version='0.9.8',
+    version='0.9.9',
     packages=find_packages(),
     include_package_data=True,
     license='ISC License',
