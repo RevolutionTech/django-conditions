@@ -466,6 +466,11 @@ $(function(){
                 return this.condition_selector_parent_group.updateJSON();
             }
 
+            // Prevent spaces from being entered in condition keys and operands
+            $('#condition-key > input, #condition-operand > input').on('keydown', function(e) {
+                return e.which !== 32;
+            });
+
             $('#condition-json > textarea').val(prettifyJSON(this.encodeJSON()));
         },
         remove_group_if_empty: function(){
