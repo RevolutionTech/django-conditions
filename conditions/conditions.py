@@ -224,7 +224,7 @@ class CompareCondition(Condition):
 
         help_text = "{normal} {operator} {operand}".format(
             normal=normal_condition_help_text,
-            operator=random.choice(cls.operators().keys()),
+            operator=random.choice(list(cls.operators().keys())),
             operand=cls.operand_example()
         )
         return help_text

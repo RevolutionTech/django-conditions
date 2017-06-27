@@ -35,7 +35,7 @@ class ConditionsWidget(JSONWidget):
         textarea = super(ConditionsWidget, self).render(name, value, attrs)
 
         condition_groups = []
-        for groupname, group in self.condition_definitions.iteritems():
+        for groupname, group in self.condition_definitions.items():
             conditions_in_group = []
             for condstr, condition in group.items():
                 conditions_in_group.append({
