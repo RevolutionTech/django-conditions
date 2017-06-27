@@ -78,7 +78,8 @@ class ConditionsWidget(JSONWidget):
 class ConditionsFormField(JSONFormField):
     def __init__(self, *args, **kwargs):
         self.condition_definitions = kwargs.pop('condition_definitions', {})
-        if 'widget' not in kwargs:
+        widget = kwargs.get('widget')
+        if not widget or not isinstance(widget, ConditionsWidget):
             kwargs['widget'] = ConditionsWidget(
                 condition_definitions=self.condition_definitions)
         super(ConditionsFormField, self).__init__(*args, **kwargs)
