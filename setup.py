@@ -42,7 +42,7 @@ class TestCommand(Command):
 
 
 requirements = [
-    'Django >= 1.8, < 1.11a0',
+    'Django >= 1.8, < 2.0a0',
     'django-jsonfield >= 1.0.1, < 2.0.0a0',
 ]
 
@@ -64,6 +64,7 @@ setup(
         'Framework :: Django :: 1.8',
         'Framework :: Django :: 1.9',
         'Framework :: Django :: 1.10',
+        'Framework :: Django :: 1.11',
         'Intended Audience :: Developers',
         'License :: OSI Approved',
         'License :: OSI Approved :: BSD License',
@@ -72,6 +73,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],

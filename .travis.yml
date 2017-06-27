@@ -9,6 +9,7 @@ env:
   - DJANGO_VERSION=1.8.18
   - DJANGO_VERSION=1.9.13
   - DJANGO_VERSION=1.10.7
+  - DJANGO_VERSION=1.11.2
 
 install:
   - pip install -q Django==$DJANGO_VERSION
@@ -18,3 +19,8 @@ script: coverage run --source=. ./setup.py test
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+matrix:
+  include:
+    - python: 3.6
+      env: DJANGO_VERSION=1.11.2
