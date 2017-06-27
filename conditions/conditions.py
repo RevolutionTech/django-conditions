@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 :Created: 31 October 2014
 :Author: Lucas Connors
