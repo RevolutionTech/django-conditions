@@ -5,9 +5,6 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/56de7e4cdf573d0048dafc52/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56de7e4cdf573d0048dafc52)
 [![Documentation Status](https://readthedocs.org/projects/django-conditions/badge/?version=latest)](http://django-conditions.readthedocs.org/en/latest/)
 
-[![PyPI](https://img.shields.io/pypi/dm/django-conditions.svg)](https://pypi.python.org/pypi/django-conditions/)
-[![PyPI](https://img.shields.io/pypi/v/django-conditions.svg)](https://pypi.python.org/pypi/django-conditions/)
-
 Move conditional logic that changes often from code into models so that the logic can be easily modified in admin. Some possible use cases:
 - Segment your user base into cohorts with targeted messaging
 - Provide different rewards to users depending on their expected value
