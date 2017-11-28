@@ -19,7 +19,10 @@ __all__ = ['ConditionsWidget', 'ConditionsFormField', 'ConditionsField']
 
 class ConditionsWidget(JSONWidget):
 
-    template_name = 'conditions/conditions_widget.html'
+    # TODO: Use template_name and refactor widget to use Django 1.11's new get_context() method
+    # when Django 1.8-1.10 support is dropped
+    # https://docs.djangoproject.com/en/1.11/ref/forms/widgets/#django.forms.Widget.get_context
+    template_name_dj110_to_dj111_compat = 'conditions/conditions_widget.html'
 
     def __init__(self, *args, **kwargs):
         self.condition_definitions = kwargs.pop('condition_definitions', {})
@@ -62,7 +65,7 @@ class ConditionsWidget(JSONWidget):
             'condition_groups': condition_groups,
         }
 
-        return mark_safe(render_to_string(self.template_name, context))
+        return mark_safe(render_to_string(self.template_name_dj110_to_dj111_compat, context))
 
 
 class ConditionsFormField(JSONFormField):
