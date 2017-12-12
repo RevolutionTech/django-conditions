@@ -8,7 +8,7 @@ from . import conditions
 
 class UserProfile(models.Model):
 
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     level = models.IntegerField(default=1)
 
 

@@ -42,14 +42,14 @@ class TestCommand(Command):
 
 
 requirements = [
-    'Django >= 1.8, < 2.0a0',
+    'Django >= 1.8, < 2.1a0',
     'django-jsonfield >= 1.0.1, < 2.0.0a0',
 ]
 
 
 setup(
     name='django-conditions',
-    version='0.9.12',
+    version='0.9.13',
     packages=find_packages(),
     include_package_data=True,
     license='ISC License',
@@ -65,6 +65,7 @@ setup(
         'Framework :: Django :: 1.9',
         'Framework :: Django :: 1.10',
         'Framework :: Django :: 1.11',
+        'Framework :: Django :: 2.0',
         'Intended Audience :: Developers',
         'License :: OSI Approved',
         'License :: OSI Approved :: BSD License',
