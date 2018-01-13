@@ -1,5 +1,6 @@
 # django-conditions
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8fccc57f17e44c5496a912adc691fc39)](https://www.codacy.com/app/RevolutionTech/django-conditions?utm_source=github.com&utm_medium=referral&utm_content=RevolutionTech/django-conditions&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/RevolutionTech/django-conditions.svg?branch=master)](https://travis-ci.org/RevolutionTech/django-conditions)
 [![codecov](https://codecov.io/gh/RevolutionTech/django-conditions/branch/master/graph/badge.svg)](https://codecov.io/gh/RevolutionTech/django-conditions)
 [![Dependency Status](https://www.versioneye.com/user/projects/56de7e4cdf573d0048dafc52/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56de7e4cdf573d0048dafc52)
