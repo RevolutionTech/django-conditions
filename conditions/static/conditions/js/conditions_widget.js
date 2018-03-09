@@ -466,9 +466,15 @@ $(function(){
                 return this.condition_selector_parent_group.updateJSON();
             }
 
-            // Prevent spaces from being entered in condition keys and operands
+            // Prevent spaces from being entered in or pasted into condition keys and operands
             $('#condition-key > input, #condition-operand > input').on('keydown', function(e) {
                 return e.which !== 32;
+            }).bind('paste', function() {
+                var input_pasted_in = $(this);
+                setTimeout(function() {
+                    var pasted_text_wo_whitespace = input_pasted_in.val().replace(/\s+/g, '');
+                    input_pasted_in.val(pasted_text_wo_whitespace);
+                });
             });
 
             $('#condition-json > textarea').val(prettifyJSON(this.encodeJSON()));
