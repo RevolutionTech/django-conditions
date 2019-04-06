@@ -42,7 +42,7 @@ class TestCommand(Command):
 
 
 requirements = [
-    'Django >= 1.8, < 2.1a0',
+    'Django >= 1.11, < 2.1a0',
     'django-jsonfield >= 1.0.1, < 2.0.0a0',
 ]
 
@@ -61,9 +61,6 @@ setup(
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 1.8',
-        'Framework :: Django :: 1.9',
-        'Framework :: Django :: 1.10',
         'Framework :: Django :: 1.11',
         'Framework :: Django :: 2.0',
         'Intended Audience :: Developers',
