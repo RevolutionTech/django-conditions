@@ -43,7 +43,7 @@ class TestCommand(Command):
 
 requirements = [
     'Django >= 1.11, < 2.1a0',
-    'django-jsonfield >= 1.0.1, < 2.0.0a0',
+    'django-jsonfield >= 1.1.0, < 2.0.0a0',
 ]
 
 
