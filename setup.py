@@ -34,15 +34,17 @@ class TestCommand(Command):
                 'django.contrib.auth',
                 'django.contrib.contenttypes',
                 'conditions',
+                'conditions.tests',
             ),
             MIDDLEWARE_CLASSES=()
         )
         django.setup()
+        call_command('migrate')
         call_command('test')
 
 
 requirements = [
-    'Django >= 1.11, < 2.1a0',
+    'Django >= 1.11, < 3.0a0',
     'django-jsonfield >= 1.1.0, < 2.0.0a0',
 ]
 
@@ -63,6 +65,8 @@ setup(
         'Framework :: Django',
         'Framework :: Django :: 1.11',
         'Framework :: Django :: 2.0',
+        'Framework :: Django :: 2.1',
+        'Framework :: Django :: 2.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved',
         'License :: OSI Approved :: BSD License',
