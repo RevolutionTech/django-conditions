@@ -78,6 +78,4 @@ Use django-conditions in your Django projects to change simple logic without hav
 
 ## More Information
 
-django-conditions is under active development. You can follow my progress [on Trello](https://trello.com/b/XQnzHWYZ).
-
 Full documentation is available [on Read The Docs](http://django-conditions.readthedocs.org/).
