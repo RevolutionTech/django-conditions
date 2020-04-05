@@ -22,4 +22,4 @@ after_success:
 matrix:
   exclude:
     - python: 3.5
-      env: DJANGO_VERSION=2.2
+      env: DJANGO_VERSION=2.2.8
