@@ -35,8 +35,7 @@ class TestCommand(Command):
                 'django.contrib.contenttypes',
                 'conditions',
                 'conditions.tests',
-            ),
-            MIDDLEWARE_CLASSES=()
+            )
         )
         django.setup()
         call_command('migrate')
@@ -44,7 +43,7 @@ class TestCommand(Command):
 
 
 requirements = [
-    'Django >= 1.11, < 3.0a0',
+    'Django >= 2.2, < 3.1a0',
     'django-jsonfield >= 1.1.0, < 2.0.0a0',
 ]
 
@@ -63,17 +62,12 @@ setup(
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 1.11',
-        'Framework :: Django :: 2.0',
-        'Framework :: Django :: 2.1',
         'Framework :: Django :: 2.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
