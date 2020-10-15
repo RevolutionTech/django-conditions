@@ -14,7 +14,19 @@ Move conditional logic that changes often from code into models so that the logi
 
 ## Installation
 
+First install the `django-conditions` package:
+
     pip install django-conditions
+
+Then add `conditions` to your `INSTALLED_APPS` setting:
+
+```python
+## settings.py
+INSTALLED_APPS = [
+    ...
+    'conditions',
+]
+```
 
 ## Basic Usage
 
