@@ -77,6 +77,7 @@ setup(
     license='ISC License',
     description='A Django app that allows creation of conditional logic in admin.',
     long_description=README,
+    long_description_content_type='text/markdown',
     url='https://github.com/RevolutionTech/django-conditions/',
     author='Lucas Connors',
     author_email='lucas@revolutiontech.ca',
