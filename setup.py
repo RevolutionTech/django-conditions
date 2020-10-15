@@ -64,7 +64,7 @@ class TestCommand(Command):
 
 
 requirements = [
-    'Django >= 2.2, < 3.1a0',
+    'Django >= 2.2, < 3.2a0',
     'django-jsonfield >= 1.1.0, < 2.0.0a0',
 ]
 
@@ -85,6 +85,7 @@ setup(
         'Framework :: Django',
         'Framework :: Django :: 2.2',
         'Framework :: Django :: 3.0',
+        'Framework :: Django :: 3.1',
         'Intended Audience :: Developers',
         'License :: OSI Approved',
         'License :: OSI Approved :: BSD License',
