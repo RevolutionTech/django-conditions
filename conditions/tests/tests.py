@@ -9,49 +9,50 @@ from .models import UserProfile, Campaign
 
 class CampaignTest(TestCase):
 
-    def setUp(self):
-        self.mrx = User.objects.create_user(
+    @classmethod
+    def setUpTestData(cls):
+        cls.mrx = User.objects.create_user(
             username='mr.x',
             email='x@gmail.com',
             password='top_secret'
         )
-        self.mrsy = User.objects.create_user(
+        cls.mrsy = User.objects.create_user(
             username='mrs.y',
             email='y@yahoo.com',
             password='also_top_secret'
         )
         # Create UserProfile objects
-        for user in [self.mrx, self.mrsy]:
+        for user in [cls.mrx, cls.mrsy]:
             UserProfile.objects.create(user=user)
 
         # Set Mr. X to have been a long-term member
-        self.mrx.date_joined = datetime.datetime(day=31, month=12, year=2013)
+        cls.mrx.date_joined = datetime.datetime(day=31, month=12, year=2013)
 
-        self.campaign = Campaign.objects.create(
+        cls.campaign = Campaign.objects.create(
             text="Thanks for providing your full name.",
             conditions={
                 'all': ["FULL_NAME"],
             }
         )
-        self.comparecondition_campaign = Campaign.objects.create(
+        cls.comparecondition_campaign = Campaign.objects.create(
             text="Congratulations on getting to Level 5!",
             conditions={
                 'all': ["LEVEL == 5"],
             }
         )
-        self.long_term_user_campaign = Campaign.objects.create(
+        cls.long_term_user_campaign = Campaign.objects.create(
             text="Thanks for being a long-term member.",
             conditions={
                 'any': ["DATE_JOINED < 01/01/2014"],
             }
         )
-        self.non_gmail_users_campaign = Campaign.objects.create(
+        cls.non_gmail_users_campaign = Campaign.objects.create(
             text="Why aren\'t you using Gmail?",
             conditions={
                 'all': ["NOT EMAIL_DOMAIN gmail.com"]
             }
         )
-        self.long_term_gmail_yahoo_user_campaign = Campaign.objects.create(
+        cls.long_term_gmail_yahoo_user_campaign = Campaign.objects.create(
             text="You\'ve been using the same email for a long time.",
             conditions={
                 'all': [
