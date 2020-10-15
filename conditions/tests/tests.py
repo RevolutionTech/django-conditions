@@ -122,7 +122,11 @@ class TestAdmin(DjangoConditionsTestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.admin_user = User.objects.create_superuser("admin")
+        cls.admin_user = User.objects.create_superuser(
+            username='admin',
+            email='admin@example.com',
+            password='admin_secret'
+        )
 
     def setUp(self):
         self.client.force_login(self.admin_user)
