@@ -71,7 +71,7 @@ requirements = [
 
 setup(
     name='django-conditions',
-    version='0.9.15',
+    version='0.9.16',
     packages=find_packages(),
     include_package_data=True,
     license='ISC License',
