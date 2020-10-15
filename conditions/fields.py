@@ -32,7 +32,7 @@ class ConditionsWidget(JSONWidget):
             kwargs['attrs']['cols'] = 50
         super(ConditionsWidget, self).__init__(*args, **kwargs)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if isinstance(value, CondList):
             value = value.encode()
         textarea = super(ConditionsWidget, self).render(name, value, attrs)

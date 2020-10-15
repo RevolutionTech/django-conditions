@@ -1,4 +1,5 @@
 import datetime
+from http import HTTPStatus
 
 from django.contrib.auth.models import User
 from django.test import TestCase
@@ -7,7 +8,7 @@ from ..lists import eval_conditions
 from .models import UserProfile, Campaign
 
 
-class CampaignTest(TestCase):
+class DjangoConditionsTestCase(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -64,6 +65,9 @@ class CampaignTest(TestCase):
             }
         )
 
+
+class TestEvalConditions(DjangoConditionsTestCase):
+
     def test_basic_campaign_targetting(self):
         # Neither user should be targetted before having a name
         self.assertFalse(eval_conditions(self.campaign, 'conditions', self.mrx))
@@ -112,3 +116,17 @@ class CampaignTest(TestCase):
         # Even though they both use either Gmail or Yahoo!, only Mr. X is targeted
         self.assertTrue(eval_conditions(self.long_term_gmail_yahoo_user_campaign, 'conditions', self.mrx))
         self.assertFalse(eval_conditions(self.long_term_gmail_yahoo_user_campaign, 'conditions', self.mrsy))
+
+
+class TestAdmin(DjangoConditionsTestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.admin_user = User.objects.create_superuser("admin")
+
+    def setUp(self):
+        self.client.force_login(self.admin_user)
+
+    def test_render(self):
+        response = self.client.get("/admin/tests/campaign/add/")
+        self.assertEqual(response.status_code, HTTPStatus.OK)
