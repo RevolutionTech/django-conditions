@@ -24,6 +24,7 @@ Django = ">= 2.2, < 3.2a0"
 django-jsonfield = "^1.1"
 
 [tool.poetry.dev-dependencies]
+opstrich = "^0.3.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
