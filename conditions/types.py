@@ -8,14 +8,14 @@ import inspect
 
 from .conditions import Condition
 
-__all__ = ['conditions_from_module']
+__all__ = ["conditions_from_module"]
 
 
 def _iscondition(cond):
     return (
         inspect.isclass(cond)
         and issubclass(cond, Condition)
-        and cond.__name__ not in ['Condition', 'CompareCondition']
+        and cond.__name__ not in ["Condition", "CompareCondition"]
     )
 
 

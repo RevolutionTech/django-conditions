@@ -11,10 +11,10 @@ import random
 
 from .exceptions import InvalidConditionError, UndefinedConditionError
 
-__all__ = ['Condition', 'CompareCondition']
+__all__ = ["Condition", "CompareCondition"]
 
 
-logger = logging.getLogger('condition')
+logger = logging.getLogger("condition")
 
 
 class Condition:
@@ -29,13 +29,14 @@ class Condition:
 
     def __repr__(self):
         return "{not_}{condstr}{key}{operator}".format(
-            not_='NOT ' if self.include_not else '',
+            not_="NOT " if self.include_not else "",
             condstr=self.condstr,
-            key=f' {self.key}' if self.key else '',
-            operator=' {operator} {operand}'.format(
-                operator=self.operatorname,
-                operand=self.operand
-            ) if self.operatorname else ''
+            key=f" {self.key}" if self.key else "",
+            operator=" {operator} {operand}".format(
+                operator=self.operatorname, operand=self.operand
+            )
+            if self.operatorname
+            else "",
         )
 
     encode = __repr__
@@ -48,13 +49,13 @@ class Condition:
             condition_definitions.update(condition_group)
         include_not = False
         operator = operand = key = None
-        condtuple = value.split(' ')
+        condtuple = value.split(" ")
 
         # CONDSTR
         condstr = condtuple.pop(0)
 
         # NOT
-        if condstr == 'NOT':
+        if condstr == "NOT":
             include_not = True
             condstr = condtuple.pop(0)
 
@@ -72,11 +73,14 @@ class Condition:
                 key = None
                 if condition.key_required():
                     raise InvalidConditionError("A key is required in this condition.")
-            elif condition.key_required() and condition.keys_allowed and key not in condition.keys_allowed:
+            elif (
+                condition.key_required()
+                and condition.keys_allowed
+                and key not in condition.keys_allowed
+            ):
                 raise InvalidConditionError(
                     "The key in this condition must be one of: {keys}; found {key}".format(
-                        keys=', '.join(condition.keys_allowed),
-                        key=key
+                        keys=", ".join(condition.keys_allowed), key=key
                     )
                 )
 
@@ -89,7 +93,9 @@ class Condition:
             operand = condtuple.pop(0)
 
         # Return initialized condition
-        return condition(operator=operator, operand=operand, key=key, include_not=include_not)
+        return condition(
+            operator=operator, operand=operand, key=key, include_not=include_not
+        )
 
     @classmethod
     def key_required(cls):
@@ -103,20 +109,20 @@ class Condition:
         except AttributeError:  # Python 2
             func_code = eval_func.im_func.func_code
 
-        return 'key' in func_code.co_names
+        return "key" in func_code.co_names
 
     @classmethod
     def key_example(cls):
         if cls.key_required():
-            key = ' '
+            key = " "
             if cls.keys_allowed:
                 key += random.choice(cls.keys_allowed)
             elif cls.key_examples:
                 key += random.choice(cls.key_examples)
             else:
-                key += 'SOME_KEY_HERE'
+                key += "SOME_KEY_HERE"
         else:
-            key = ''
+            key = ""
         return key
 
     @classmethod
@@ -125,7 +131,7 @@ class Condition:
         try:
             return module.NAME
         except AttributeError:
-            return module.__name__.split('.')[-1]
+            return module.__name__.split(".")[-1]
 
     @classmethod
     def help_text(cls):
@@ -133,9 +139,7 @@ class Condition:
         Randomly generate a possible example for this condition
         """
         return "Ex. {not_}{condstr}{key}".format(
-            not_=random.choice(['NOT ', '']),
-            condstr=cls.condstr,
-            key=cls.key_example()
+            not_=random.choice(["NOT ", ""]), condstr=cls.condstr, key=cls.key_example()
         )
 
     @classmethod
@@ -146,11 +150,13 @@ class Condition:
         """
         docstring = inspect.getdoc(cls)
         if docstring:
-            return docstring.replace('\r', '').replace('\n', ' ')
+            return docstring.replace("\r", "").replace("\n", " ")
         else:
             return cls.help_text()
 
-    def __init__(self, operator=None, operand=None, key=None, include_not=False, *args, **kwargs):
+    def __init__(
+        self, operator=None, operand=None, key=None, include_not=False, *args, **kwargs
+    ):
         super().__init__(*args, **kwargs)
         self.operatorname = operator
         self.key = key
@@ -161,8 +167,10 @@ class Condition:
             evaluation = self.eval_bool(user, **kwargs)
         except Exception as e:
             logger.warning(
-                "An exception occurred while processing a condition: {exception}".format(exception=str(e)),
-                exc_info=True
+                "An exception occurred while processing a condition: {exception}".format(
+                    exception=str(e)
+                ),
+                exc_info=True,
             )
             return False
 
@@ -191,12 +199,12 @@ class CompareCondition(Condition):
         """
         if cls.cast_operand in [float, int]:
             return {
-                '<': lambda x, y: x < y,
-                '<=': lambda x, y: x <= y,
-                '==': lambda x, y: x == y,
-                '!=': lambda x, y: x != y,
-                '>=': lambda x, y: x >= y,
-                '>': lambda x, y: x > y,
+                "<": lambda x, y: x < y,
+                "<=": lambda x, y: x <= y,
+                "==": lambda x, y: x == y,
+                "!=": lambda x, y: x != y,
+                ">=": lambda x, y: x >= y,
+                ">": lambda x, y: x > y,
             }
         else:
             return {}
@@ -211,7 +219,7 @@ class CompareCondition(Condition):
         elif cls.operand_examples:
             operand = random.choice(cls.operand_examples)
         else:
-            operand = 'SOME_OPERAND_HERE'
+            operand = "SOME_OPERAND_HERE"
         return operand
 
     @classmethod
@@ -224,7 +232,7 @@ class CompareCondition(Condition):
         help_text = "{normal} {operator} {operand}".format(
             normal=normal_condition_help_text,
             operator=random.choice(list(cls.operators().keys())),
-            operand=cls.operand_example()
+            operand=cls.operand_example(),
         )
         return help_text
 
@@ -232,13 +240,17 @@ class CompareCondition(Condition):
         try:
             self.operator = self.operators()[operator]
         except KeyError:
-            raise InvalidConditionError("The given function is not a comparison function or is unsupported.")
+            raise InvalidConditionError(
+                "The given function is not a comparison function or is unsupported."
+            )
         self.operand = self.cast_operand(operand)
 
         super().__init__(operator, operand, key, include_not, *args, **kwargs)
 
     def eval_bool(self, user, **kwargs):
-        return self.operator(self.cast_operand(self.eval_operand(user, **kwargs)), self.operand)
+        return self.operator(
+            self.cast_operand(self.eval_operand(user, **kwargs)), self.operand
+        )
 
     @abc.abstractmethod
     def eval_operand(self, user, **kwargs):

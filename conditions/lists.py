@@ -9,7 +9,7 @@ import abc
 from .conditions import Condition
 from .exceptions import InvalidConditionError
 
-__all__ = ['CondList', 'CondAllList', 'CondAnyList', 'eval_conditions']
+__all__ = ["CondList", "CondAllList", "CondAnyList", "eval_conditions"]
 
 
 class CondList(list):
@@ -38,13 +38,17 @@ class CondList(list):
     @classmethod
     def decode(cls, value, definitions=None):
         # Validate conddict
-        if value is not None and (not isinstance(value, dict) or 'all' in value == 'any' in value):
-            raise InvalidConditionError("Conditions dict is invalid. Exactly one of 'all' or 'any' must be used.")
+        if value is not None and (
+            not isinstance(value, dict) or "all" in value == "any" in value
+        ):
+            raise InvalidConditionError(
+                "Conditions dict is invalid. Exactly one of 'all' or 'any' must be used."
+            )
 
-        if 'all' in value:
-            return CondAllList(cls.decode_list(value['all'], definitions=definitions))
-        elif 'any' in value:
-            return CondAnyList(cls.decode_list(value['any'], definitions=definitions))
+        if "all" in value:
+            return CondAllList(cls.decode_list(value["all"], definitions=definitions))
+        elif "any" in value:
+            return CondAnyList(cls.decode_list(value["any"], definitions=definitions))
 
     @abc.abstractmethod
     def encode(self):
@@ -65,7 +69,7 @@ class CondAllList(CondList):
 
     def encode(self):
         return {
-            'all': map(lambda x: x.encode(), self),
+            "all": map(lambda x: x.encode(), self),
         }
 
     def eval(self, user, **kwargs):
@@ -85,7 +89,7 @@ class CondAnyList(CondList):
 
     def encode(self):
         return {
-            'any': map(lambda x: x.encode(), self),
+            "any": map(lambda x: x.encode(), self),
         }
 
     def eval(self, user, **kwargs):
