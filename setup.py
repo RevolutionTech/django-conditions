@@ -59,7 +59,6 @@ class TestCommand(Command):
             ROOT_URLCONF='tests.urls'
         )
         django.setup()
-        call_command('migrate')
         call_command('test')
 
 
