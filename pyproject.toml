@@ -19,7 +19,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.5"
+python = "^3.6.1"
 Django = ">= 2.2, < 3.2a0"
 django-jsonfield = "^1.1"
 
