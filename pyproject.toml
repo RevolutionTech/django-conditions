@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "django-conditions"
+version = "0.9.16.1"
+description = "A Django app that allows creation of conditional logic in admin."
+authors = ["Lucas Connors <lucas@revolutiontech.ca>"]
+license = "ISC"
+readme = "README.md"
+repository = "https://github.com/RevolutionTech/django-conditions"
+classifiers = [
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 2.2",
+    "Framework :: Django :: 3.0",
+    "Framework :: Django :: 3.1",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+
+[tool.poetry.dependencies]
+python = "^3.5"
+Django = ">= 2.2, < 3.2a0"
+django-jsonfield = "^1.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
