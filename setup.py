@@ -37,7 +37,7 @@ class TestCommand(Command):
                 'django.contrib.messages',
                 'django.contrib.sessions',
                 'conditions',
-                'conditions.tests',
+                'tests',
             ),
             TEMPLATES=[
                 {
@@ -56,7 +56,7 @@ class TestCommand(Command):
                 'django.contrib.auth.middleware.AuthenticationMiddleware',
                 'django.contrib.messages.middleware.MessageMiddleware',
             ],
-            ROOT_URLCONF='conditions.tests.urls'
+            ROOT_URLCONF='tests.urls'
         )
         django.setup()
         call_command('migrate')

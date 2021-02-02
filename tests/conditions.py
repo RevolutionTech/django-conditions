@@ -1,6 +1,6 @@
 import datetime
 
-from ..conditions import Condition, CompareCondition
+from conditions.conditions import Condition, CompareCondition
 
 
 NAME = 'Examples'
