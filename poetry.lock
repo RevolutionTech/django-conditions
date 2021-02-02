@@ -104,7 +104,7 @@ python-versions = "*"
 
 [[package]]
 name = "opstrich"
-version = "0.3.0"
+version = "0.3.1"
 description = "DevOps tooling, various scripts, etc."
 category = "dev"
 optional = false
@@ -242,8 +242,8 @@ mypy-extensions = [
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
 ]
 opstrich = [
-    {file = "opstrich-0.3.0-py3-none-any.whl", hash = "sha256:3127d15f98ea8c285c571ac1f9e0a4a6f138a300c0880a7c856900d7d7a58312"},
-    {file = "opstrich-0.3.0.tar.gz", hash = "sha256:f03cf9ff925059d2bb55f8715ac0c76f5a263852eb57a77c133016361cecd1e0"},
+    {file = "opstrich-0.3.1-py3-none-any.whl", hash = "sha256:f470ad67d71c98a5cadc2cd386bae1dad83c8641213dcc5cb1135e554701e0e9"},
+    {file = "opstrich-0.3.1.tar.gz", hash = "sha256:bb69509904be818e4096dc7f841b052e9920dd73c4e0e218eb83624ee16491be"},
 ]
 pathspec = [
     {file = "pathspec-0.8.1-py2.py3-none-any.whl", hash = "sha256:aa0cb481c4041bf52ffa7b0d8fa6cd3e88a2ca4879c533c9153882ee2556790d"},
