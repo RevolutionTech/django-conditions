@@ -8,7 +8,6 @@ import inspect
 
 from .conditions import Condition
 
-
 __all__ = ['conditions_from_module']
 
 

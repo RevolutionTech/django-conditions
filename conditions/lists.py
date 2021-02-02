@@ -9,7 +9,6 @@ import abc
 from .conditions import Condition
 from .exceptions import InvalidConditionError
 
-
 __all__ = ['CondList', 'CondAllList', 'CondAnyList', 'eval_conditions']
 
 

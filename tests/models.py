@@ -3,6 +3,7 @@ from django.db import models
 
 from conditions.fields import ConditionsField
 from conditions.types import conditions_from_module
+
 from . import conditions
 
 

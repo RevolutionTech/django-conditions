@@ -9,8 +9,7 @@ import inspect
 import logging
 import random
 
-from .exceptions import UndefinedConditionError, InvalidConditionError
-
+from .exceptions import InvalidConditionError, UndefinedConditionError
 
 __all__ = ['Condition', 'CompareCondition']
 

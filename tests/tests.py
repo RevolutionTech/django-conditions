@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 
 from conditions.lists import eval_conditions
-from .models import UserProfile, Campaign
+
+from .models import Campaign, UserProfile
 
 
 class DjangoConditionsTestCase(TestCase):

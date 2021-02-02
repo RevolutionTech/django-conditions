@@ -13,7 +13,6 @@ from .conditions import CompareCondition
 from .exceptions import InvalidConditionError
 from .lists import CondList
 
-
 __all__ = ['ConditionsWidget', 'ConditionsFormField', 'ConditionsField']
 
 
