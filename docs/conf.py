@@ -46,7 +46,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "django-conditions"
-copyright = "2014, Lucas Connors"
+copyright = "2021, Lucas Connors"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
