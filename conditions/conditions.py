@@ -18,7 +18,7 @@ __all__ = ['Condition', 'CompareCondition']
 logger = logging.getLogger('condition')
 
 
-class Condition(object):
+class Condition:
     """
     A condition which evaluates either to True or False
     """
@@ -32,7 +32,7 @@ class Condition(object):
         return "{not_}{condstr}{key}{operator}".format(
             not_='NOT ' if self.include_not else '',
             condstr=self.condstr,
-            key=' {key}'.format(key=self.key) if self.key else '',
+            key=f' {self.key}' if self.key else '',
             operator=' {operator} {operand}'.format(
                 operator=self.operatorname,
                 operand=self.operand
@@ -63,7 +63,7 @@ class Condition(object):
         try:
             condition = condition_definitions[condstr]
         except KeyError:
-            raise UndefinedConditionError("The condition {condstr} is not defined.".format(condstr=condstr))
+            raise UndefinedConditionError(f"The condition {condstr} is not defined.")
 
         # KEY
         if len(condtuple) > 0:
@@ -152,7 +152,7 @@ class Condition(object):
             return cls.help_text()
 
     def __init__(self, operator=None, operand=None, key=None, include_not=False, *args, **kwargs):
-        super(Condition, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.operatorname = operator
         self.key = key
         self.include_not = include_not
@@ -220,7 +220,7 @@ class CompareCondition(Condition):
         """
         Randomly generate a possible example for this condition
         """
-        normal_condition_help_text = super(CompareCondition, cls).help_text()
+        normal_condition_help_text = super().help_text()
 
         help_text = "{normal} {operator} {operand}".format(
             normal=normal_condition_help_text,
@@ -236,7 +236,7 @@ class CompareCondition(Condition):
             raise InvalidConditionError("The given function is not a comparison function or is unsupported.")
         self.operand = self.cast_operand(operand)
 
-        super(CompareCondition, self).__init__(operator, operand, key, include_not, *args, **kwargs)
+        super().__init__(operator, operand, key, include_not, *args, **kwargs)
 
     def eval_bool(self, user, **kwargs):
         return self.operator(self.cast_operand(self.eval_operand(user, **kwargs)), self.operand)

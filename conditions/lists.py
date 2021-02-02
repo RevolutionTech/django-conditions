@@ -62,7 +62,7 @@ class CondAllList(CondList):
     """
 
     def __repr__(self):
-        return "<All: {}>".format(super(CondAllList, self).__repr__())
+        return f"<All: {super().__repr__()}>"
 
     def encode(self):
         return {
@@ -82,7 +82,7 @@ class CondAnyList(CondList):
     """
 
     def __repr__(self):
-        return "<Any: {}>".format(super(CondAnyList, self).__repr__())
+        return f"<Any: {super().__repr__()}>"
 
     def encode(self):
         return {

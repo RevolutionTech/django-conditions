@@ -30,12 +30,12 @@ class ConditionsWidget(JSONWidget):
             kwargs['attrs'] = {}
         if 'cols' not in kwargs['attrs']:
             kwargs['attrs']['cols'] = 50
-        super(ConditionsWidget, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def render(self, name, value, attrs=None, renderer=None):
         if isinstance(value, CondList):
             value = value.encode()
-        textarea = super(ConditionsWidget, self).render(name, value, attrs)
+        textarea = super().render(name, value, attrs)
 
         condition_groups = []
         for groupname, group in self.condition_definitions.items():
@@ -74,11 +74,11 @@ class ConditionsFormField(JSONFormField):
         self.condition_definitions = kwargs.pop('condition_definitions', {})
         if 'widget' not in kwargs:
             kwargs['widget'] = ConditionsWidget(condition_definitions=self.condition_definitions)
-        super(ConditionsFormField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def clean(self, value):
         """ Validate conditions by decoding result """
-        cleaned_json = super(ConditionsFormField, self).clean(value)
+        cleaned_json = super().clean(value)
         if cleaned_json is None:
             return
 
@@ -98,14 +98,14 @@ class ConditionsField(JSONField):
 
     def __init__(self, *args, **kwargs):
         self.condition_definitions = kwargs.pop('definitions', {})
-        super(ConditionsField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
         kwargs['condition_definitions'] = self.condition_definitions
         return ConditionsFormField(**kwargs)
 
     def pre_init(self, value, obj):
-        value = super(ConditionsField, self).pre_init(value, obj)
+        value = super().pre_init(value, obj)
         if isinstance(value, dict):
             value = CondList.decode(value, definitions=self.condition_definitions)
         return value
@@ -113,9 +113,9 @@ class ConditionsField(JSONField):
     def dumps_for_display(self, value):
         if isinstance(value, CondList):
             value = value.encode()
-        return super(ConditionsField, self).dumps_for_display(value)
+        return super().dumps_for_display(value)
 
     def get_db_prep_value(self, value, connection, prepared=False):
         if isinstance(value, CondList):
             value = value.encode()
-        return super(ConditionsField, self).get_db_prep_value(value, connection, prepared)
+        return super().get_db_prep_value(value, connection, prepared)

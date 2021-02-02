@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # django-conditions documentation build configuration file, created by
 # sphinx-quickstart on Mon Dec 15 01:03:39 2014.
@@ -46,8 +45,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'django-conditions'
-copyright = u'2014, Lucas Connors'
+project = 'django-conditions'
+copyright = '2014, Lucas Connors'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -218,8 +217,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'django-conditions.tex', u'django-conditions Documentation',
-   u'Lucas Connors', 'manual'),
+  ('index', 'django-conditions.tex', 'django-conditions Documentation',
+   'Lucas Connors', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -248,8 +247,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'django-conditions', u'django-conditions Documentation',
-     [u'Lucas Connors'], 1)
+    ('index', 'django-conditions', 'django-conditions Documentation',
+     ['Lucas Connors'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -262,8 +261,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'django-conditions', u'django-conditions Documentation',
-   u'Lucas Connors', 'django-conditions', 'One line description of project.',
+  ('index', 'django-conditions', 'django-conditions Documentation',
+   'Lucas Connors', 'django-conditions', 'One line description of project.',
    'Miscellaneous'),
 ]
 
