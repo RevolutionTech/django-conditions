@@ -1,65 +1,12 @@
 #!/usr/bin/env python
 import os
-from setuptools import setup, find_packages, Command
+from setuptools import setup, find_packages
 
 
 with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
     README = readme.read()
 
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
-
-
-class TestCommand(Command):
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        import django
-        from django.conf import settings
-        from django.core.management import call_command
-
-        settings.configure(
-            DATABASES={
-                'default': {
-                    'NAME': ':memory:',
-                    'ENGINE': 'django.db.backends.sqlite3',
-                }
-            },
-            INSTALLED_APPS=(
-                'django.contrib.admin',
-                'django.contrib.auth',
-                'django.contrib.contenttypes',
-                'django.contrib.messages',
-                'django.contrib.sessions',
-                'conditions',
-                'tests',
-            ),
-            TEMPLATES=[
-                {
-                    'BACKEND': 'django.template.backends.django.DjangoTemplates',
-                    'APP_DIRS': True,
-                    'OPTIONS': {
-                        'context_processors': [
-                            'django.contrib.auth.context_processors.auth',
-                            'django.contrib.messages.context_processors.messages',
-                        ]
-                    },
-                }
-            ],
-            MIDDLEWARE=[
-                'django.contrib.sessions.middleware.SessionMiddleware',
-                'django.contrib.auth.middleware.AuthenticationMiddleware',
-                'django.contrib.messages.middleware.MessageMiddleware',
-            ],
-            ROOT_URLCONF='tests.urls'
-        )
-        django.setup()
-        call_command('test')
 
 
 requirements = [
@@ -109,5 +56,4 @@ setup(
     },
     install_requires=requirements,
     tests_require=requirements,
-    cmdclass={'test': TestCommand},
 )
