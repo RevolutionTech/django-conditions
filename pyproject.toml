@@ -4,6 +4,9 @@ version = "0.9.16.1"
 description = "A Django app that allows creation of conditional logic in admin."
 authors = ["Lucas Connors <lucas@revolutiontech.ca>"]
 license = "ISC"
+packages = [
+    { include = "conditions" },
+]
 readme = "README.md"
 repository = "https://github.com/RevolutionTech/django-conditions"
 classifiers = [
