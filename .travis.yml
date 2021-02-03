@@ -1,7 +1,6 @@
 dist: xenial
 language: python
 python:
-  - 3.5
   - 3.6
   - 3.7
   - 3.8
@@ -15,14 +14,21 @@ install:
   - pip install -q Django==$DJANGO_VERSION
   - pip install 'django-jsonfield >= 1.1.0, < 2.0.0a0' coverage
 
-script: coverage run --source=. ./setup.py test
+script: coverage run --source=. ./runtests.py
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
-matrix:
-  exclude:
-    - python: 3.5
-      env: DJANGO_VERSION=3.0
-    - python: 3.5
+jobs:
+  include:
+    - stage: checks & publish
+      python: 3.8
       env: DJANGO_VERSION=3.1
+      before_install: pip install poetry
+      install: poetry install
+      script: poetry run inv check.all
+      deploy:
+        provider: script
+        script: poetry publish --build
+        on:
+          tags: true

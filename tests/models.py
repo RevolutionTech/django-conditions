@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from ..fields import ConditionsField
-from ..types import conditions_from_module
+from conditions.fields import ConditionsField
+from conditions.types import conditions_from_module
+
 from . import conditions
 
 
