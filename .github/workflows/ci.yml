@@ -1,0 +1,49 @@
+name: CI
+on: push
+
+jobs:
+  checks:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - run: pip install poetry
+      - run: poetry install
+
+      - run: poetry run inv check.all
+
+  test:
+    runs-on: ubuntu-20.04
+    needs: checks
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
+        django-version: [2.2.8, 3.0, 3.1]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -q Django==${{ matrix.django-version }} 'django-jsonfield >= 1.1.0, < 2.0.0a0' coverage
+
+      - run: coverage run --source=. ./runtests.py
+      - run: coverage xml
+      - uses: codecov/codecov-action@v1.2.1
+
+  publish:
+    runs-on: ubuntu-20.04
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - run: pip install poetry
+      - run: poetry install
+
+      - run: poetry publish --build
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.POETRY_PYPI_TOKEN_PYPI }}
