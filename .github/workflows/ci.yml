@@ -19,7 +19,7 @@ jobs:
     needs: checks
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version: [3.7, 3.8]
         django-version: [2.2.8, 3.0, 3.1]
     steps:
       - uses: actions/checkout@v2
