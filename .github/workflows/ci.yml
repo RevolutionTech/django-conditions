@@ -19,8 +19,8 @@ jobs:
     needs: checks
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
-        django-version: [2.2.8, 3.0, 3.1]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        django-version: ["2.2.8", "3.0", "3.1", "3.2"]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2

@@ -5,6 +5,7 @@ from django.core.management import call_command
 
 if __name__ == "__main__":
     settings.configure(
+        SECRET_KEY="y*8i&l0^b)%l4ymt631e69=78!4uh!=iity6e-c%m2n&2aepxr",
         DATABASES={
             "default": {
                 "NAME": ":memory:",

@@ -15,6 +15,7 @@ classifiers = [
     "Framework :: Django :: 2.2",
     "Framework :: Django :: 3.0",
     "Framework :: Django :: 3.1",
+    "Framework :: Django :: 3.2",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
     "Topic :: Internet :: WWW/HTTP",
@@ -22,8 +23,8 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.6.1"
-Django = ">= 2.2, < 3.2a0"
+python = "^3.7"
+Django = ">= 2.2, < 4.0a0"
 django-jsonfield = "^1.1"
 
 [tool.poetry.dev-dependencies]
@@ -34,7 +35,7 @@ profile = "black"
 
 [tool.black]
 line-length = 88
-target_version = ["py36", "py37", "py38"]
+target_version = ["py37", "py38"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
